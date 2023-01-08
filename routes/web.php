@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,12 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect'])
+    ->where('provider', 'github|gitlab|google');
+
+Route::get('/auth/{provider}/callback', [SocialController::class, 'callback'])
+    ->where('provider', 'github|gitlab|google');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
